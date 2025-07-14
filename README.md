@@ -5,8 +5,8 @@ Este projeto é um back-end para gerenciamento de pacientes, consultas e profiss
 
 # Tecnologias Utilizadas
 
-- Python 3.x
-- Django 4.x
+- Python 3.13.0
+- Django 5.2.2
 - Django REST Framework
 - JWT (Autenticação via djangorestframework-simplejwt)
 - SQLite3
