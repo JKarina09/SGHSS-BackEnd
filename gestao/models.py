@@ -14,7 +14,7 @@ class Usuario(AbstractUser):
     perfil = models.CharField(max_length=20, choices=PERFIL_CHOICES)
 
     def __str__(self):
-        return f'{self.nome} ({self.perfil})'
+        return f'{self.username} ({self.perfil})'
     
 class Paciente(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
@@ -32,13 +32,22 @@ class ProfissionalSaude(models.Model):
 
     def __str__(self):
         return f'{self.usuario.get_full_name()} - {self.especialidade}'
+    
+    class Meta:
+        verbose_name_plural = "Profissionais de Saúde"
 
 class Consulta(models.Model):
+    STATUS_CHOICES = [
+        ('agendada', 'Agendada'),
+        ('concluída', 'Concluída'),
+        ('cancelada', 'Cancelada'),
+        ('reagendada', 'Reagendada')
+    ]
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     profissional = models.ForeignKey(ProfissionalSaude, on_delete=models.CASCADE)
     data = models.DateField()
     hora = models.TimeField()
-    status = models.CharField(max_length=20, default='agendada')  # agendada, cancelada, concluída
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='agendada')  
 
     def __str__(self):
         return f'Consulta em {self.data} ás {self.hora} com {self.profissional}'
@@ -50,4 +59,4 @@ class Pronturario(models.Model):
     receita = models.TextField(blank=True)
 
     def __str__(self):
-        return 'Prontuário da Consulta {self.consulta.id}'       
+        return f'Prontuário da Consulta {self.consulta.id}'       
