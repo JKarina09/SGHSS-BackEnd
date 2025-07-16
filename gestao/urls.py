@@ -9,5 +9,5 @@ router.register(r'profissionais', ProfissionalViewSet)
 
 urlpatterns = [
     path('login/', login_view, name='login'),
-    path('api', include(router.urls)),
+    path('api/', include(router.urls)),
 ]
